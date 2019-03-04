@@ -19,10 +19,10 @@ bool isNumber(char);
 
 int main() {
 
-    // sample programming lanugage code
+    // sample programming language code
     std::string prog = "int variable = 10; if (10 > 5) anotherValue++; // do something}";
 
-    // autamata state number
+    // automata state number
     short int state = 0;
 
     // beginning of the word index
