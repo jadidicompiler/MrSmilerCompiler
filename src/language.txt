@@ -1,1 +1,12 @@
 first line of the file
+
+
+int x = 10;
+
+int func(){
+
+
+}
+
+
+
