@@ -1,7 +1,6 @@
-first line of the file
+var3 = var1 += 89 ;
 
-
-int x = 10;
+int -x = 100 *2;
 
 int func(){
 
