@@ -112,8 +112,10 @@ class LexicalAnalyser {
         std::string error;
         // increment the text pointer
         int nextChar(){
-            this->forward++;     
-            this->current_char = this->text[forward];
+            if (this->state != 9999){
+                this->forward++;     
+            }
+            this->current_char = this->text[this->forward];
             return this->current_char;
         }
 
@@ -134,7 +136,7 @@ class LexicalAnalyser {
         LexicalAnalyser(char* fileContent) {
             this->text = fileContent; 
             this->state = 0;
-            this->forward = -1;
+            this->forward = 0;
         }
 
         // scan the file
@@ -164,6 +166,7 @@ void LexicalAnalyser::printTokens(){
             value = token_value; 
         }
         std::cout << "<"<< token_type <<", "<< value << ">" << " "; 
+        std::cout << std::endl;
     }
 
 }
@@ -172,6 +175,7 @@ void LexicalAnalyser::scan(){
 
     // loop over the text until the end of text
     bool is_error = 0;
+    bool is_single = false;
     std::string str;
     while(this->nextChar() && !is_error){
 
@@ -201,13 +205,16 @@ void LexicalAnalyser::scan(){
                 else if (ch == '&') this->state = 8;
                 else if (ch == '|') this->state = 9;
                 else if (ch == '?' || ch == ':'){
+                    is_single = true;
                     this->state = 9999;
                     this->token_type = "op";
                 } 
                 else if (ch == '{' || ch == '}' ||
                          ch == '[' || ch == ']' || 
-                         ch == '(' || ch == ')') {
+                         ch == '(' || ch == ')' ||
+                         ch == ';') {
 
+                    is_single = true;
                     this->state = 9999;
                     this->token_type = "sep";
                          }
@@ -358,9 +365,12 @@ void LexicalAnalyser::scan(){
 
             // automata state 9999
             case 9999: 
-                this->forward--;
                 Token* token;
                 //
+                if (!is_single){
+                    this->forward--;
+                }
+                is_single = false;
                 str = createString(this->word_begin,
                                    this->forward,
                                    this->text);
@@ -393,6 +403,7 @@ void LexicalAnalyser::scan(){
                 this->word_begin = this->forward + 1;
                 this->state = 0;
 
+
                 break;
 
             // error state
@@ -417,7 +428,7 @@ std::string createString(int begin, int end, std::string pstr){
 
     char* str = new char[pstr_length];
     int l = 0;
-    for (int i = begin; i < end; i++){
+    for (int i = begin; i <= end; i++){
         str[l++] = pstr[i]; 
     }
     str[l] = '\0';
@@ -446,6 +457,5 @@ bool isAlpha(char ch){
 bool isNumber(char ch){
     return (ch > 47 && ch < 58)? true: false;
 }
-
 
 

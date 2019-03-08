@@ -1,10 +1,12 @@
-var3 = var1 += 89 ;
+int var3 = var1 + 89 ;
 
-int -x = 100 *2;
+int x = 100 * 2;
 
+a << b;
+c & d;
 int func(){
 
-
+    return (99 <= 10 ? var1 : var2);
 }
 
 
