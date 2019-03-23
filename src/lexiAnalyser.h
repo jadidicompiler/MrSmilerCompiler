@@ -77,7 +77,6 @@ class Token{
 
 // first phase of compiler
 class LexicalAnalyser {
-
     private: 
         // programming language text
         std::string text; 
@@ -136,7 +135,7 @@ class LexicalAnalyser {
         LexicalAnalyser(char* fileContent) {
             this->text = fileContent; 
             this->state = 0;
-            this->forward = 0;
+            this->forward = -1;
         }
 
         // scan the file
@@ -181,9 +180,9 @@ void LexicalAnalyser::scan(){
 
         // current character
         char ch = this->getChar();
+
         // automata implemention
         switch(this->state){
-            
             // automata state 0
             case 0:
                
