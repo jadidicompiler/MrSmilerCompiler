@@ -28,6 +28,7 @@
 #include <fstream>
 #include <vector>
 #include "util.h"
+#include "token.h"
 
 
 // first phase of compiler
@@ -102,6 +103,7 @@ class LexicalAnalyser {
 
 // print the tokens in a human readable format
 void LexicalAnalyser::printTokens(){
+
     for(int i = 0; i < this->tokens.size(); i++){
         std::string token_type = this->tokens[i]->getTokenType();
         int token_value = this->tokens[i]->getTokenValue();
@@ -171,7 +173,7 @@ void LexicalAnalyser::scan(){
                     is_single = true;
                     this->state = 9999;
                     this->token_type = "sep";
-                         }
+                }
 
                 else {
                     this->word_begin = this->forward + 1;
@@ -329,30 +331,42 @@ void LexicalAnalyser::scan(){
                                    this->forward,
                                    this->text);
 
-                if (this->token_type == "id") {
+                /* if (this->token_type == "id") { */
                     
-                    bool is_keyword = false;
-                    // check if the identifier is a keyword
-                    int length = sizeof(KEYWORDS)/sizeof(KEYWORDS[0]);
-                    for(int i = 0; i < length; i++){
-                        if (str == KEYWORDS[i]){
-                            is_keyword = true; 
-                            break;
-                        }
-                    }
+                /*     bool is_keyword = false; */
+                /*     // check if the identifier is a keyword */
+                /*     int length = sizeof(KEYWORDS)/sizeof(KEYWORDS[0]); */
+                /*     for(int i = 0; i < length; i++){ */
+                /*         if (str == KEYWORDS[i]){ */
+                /*             is_keyword = true; */ 
+                /*             break; */
+                /*         } */
+                /*     } */
 
-                    if (is_keyword) {
-                        token = new Token("kw", str);
-                    }
-                    else {
-                        this->symbol_table.push_back(str);
-                        token = new Token(this->token_type, ++this->st_index);
-                    }
-                }
-                else {
-                    token = new Token(this->token_type, str);
-                }
-                
+                /*     if (is_keyword) { */
+                /*         token = new Token("kw", str); */
+                /*     } */
+                /*     else { */
+                /*         this->symbol_table.push_back(str); */
+                /*         token = new Token(this->token_type, ++this->st_index); */
+                /*     } */
+                /* } */
+                /* else { */
+                /*     token = new Token(this->token_type, str); */
+                /* } */
+		int value;
+		if (this->token_type == "num"){
+		   // convert str to number	
+		   value = convertToNumber(str);
+		}                
+		else {
+		    // find the str in token list
+		    // if it was not there put the token
+		    // in the symbole table
+		}
+
+		token = new Token(value,)
+
                 this->tokens.push_back(token);
                 this->word_begin = this->forward + 1;
                 this->state = 0;
