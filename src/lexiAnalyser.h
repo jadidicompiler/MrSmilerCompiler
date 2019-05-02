@@ -27,53 +27,8 @@
 #include <string>
 #include <fstream>
 #include <vector>
+#include "util.h"
 
-std::string createString(int, int, std::string);
-bool isAlpha(char);
-bool isNumber(char);
-
-
-
-// standard keywords
-
-std::string KEYWORDS[] = {
-    "int", "char", "std",
-    "string", "float", "double",
-    "void", "return", "if", 
-    "else", "while", "for",
-};
-
-
-
-// this class holds token information
-// like <token_type, token_postion>
-class Token{
-    
-    private:
-        std::string token_type;
-        std::string token_value_str;
-        int token_value;
-
-    public:
-        
-        // constructor 1 string , int
-        Token(std::string token_type, int token_value){
-            this->token_type = token_type; 
-            this->token_value = token_value; 
-        }
-
-        // constructor 2 strin , string
-        Token(std::string token_type, std::string token_value_str){
-            this->token_type = token_type; 
-            this->token_value_str = token_value_str;
-        }
-
-        // void setTokenName(std::string name){this->token_name_ = name;}
-        std::string getTokenType(){return this->token_type;}
-        int getTokenValue(){return this->token_value;}
-        std::string getTokenValueStr(){return this->token_value_str;}
-
-};
 
 // first phase of compiler
 class LexicalAnalyser {
@@ -418,43 +373,6 @@ void LexicalAnalyser::scan(){
                 break;
         }
     } 
-}
-
-// create std::string word from beginnig and end index of the text
-std::string createString(int begin, int end, std::string pstr){
-    int pstr_length = end - begin + 1;
-
-
-    char* str = new char[pstr_length];
-    int l = 0;
-    for (int i = begin; i <= end; i++){
-        str[l++] = pstr[i]; 
-    }
-    str[l] = '\0';
-
-    std::string new_str = str;
-    delete [] str;
-    
-    return new_str;
-}
-
-// this determines a character is alphabet character
-bool isAlpha(char ch){
-    if ((ch > 64 && 
-        ch < 91) ||
-        (ch > 96 && 
-        ch < 122)) {
-         
-        return true;
-    }
-    else {
-        return false; 
-    }
-}
-
-// this determines a character is number
-bool isNumber(char ch){
-    return (ch > 47 && ch < 58)? true: false;
 }
 
 
