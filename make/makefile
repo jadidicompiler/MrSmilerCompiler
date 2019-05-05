@@ -98,8 +98,3 @@ util_unittest: util.o util_unittest.o $(GTEST_LIBS)
 token.o: $(SRC_DIR)/token.cc
 	$(CXX) -c $(TESTS_DIR)/token.cc -o token.o
 
-
-
-
-
-
