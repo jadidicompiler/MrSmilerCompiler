@@ -2,7 +2,7 @@
 #ifndef TOKEN_H
 #define TOKEN_H
 
-
+#include <string>
 
 // token list is a macro which contains all valid tokens
 // in this example language
@@ -18,7 +18,7 @@
     TOKEN(DIV, "/")				\
     TOKEN(MOD, "%")                             \
     TOKEN(EXP, "**")                            \
-    TOKEN(OR, "||")                             \    
+    TOKEN(OR, "||")                             \
     TOKEN(AND, "&&")                            \
     TOKEN(BIT_OR, "|")                          \
     TOKEN(BIT_XOR, "^")                         \
@@ -27,20 +27,20 @@
     TOKEN(SAR, ">>")                            \
     TOKEN(CONDITIONAL, "?")                     \
                                                 \
-                                                \ 
+                                                \
     /* puctuator or seperators */               \
-    TOKEN(LPAREN, "(")                          \    
-    TOKEN(RPAREN, ")")                          \ 
-    TOKEN(LBRACK, "[")                          \ 
-    TOKEN(RBRACK, "]")                          \ 
-    TOKEN(LBRACE, "{")                          \ 
-    TOKEN(RBRACE, "}")                          \ 
+    TOKEN(LPAREN, "(")                          \
+    TOKEN(RPAREN, ")")                          \
+    TOKEN(LBRACK, "[")                          \
+    TOKEN(RBRACK, "]")                          \
+    TOKEN(LBRACE, "{")                          \
+    TOKEN(RBRACE, "}")                          \
     TOKEN(COLON, ":")                           \
     TOKEN(SEMICOLON, ";")                       \
     TOKEN(PERIOD, ".")                          \
-    TOKEN(INC, "++")                            \ 
-    TOKEN(DEC, "--")                            \ 
-    TOKEN(ARROW, "=>")                          \ 
+    TOKEN(INC, "++")                            \
+    TOKEN(DEC, "--")                            \
+    TOKEN(ARROW, "=>")                          \
                                                 \
     /* assignment operators */                  \
     TOKEN(ASSIGN, "=")                          \
@@ -110,39 +110,30 @@ class TokenList {
 
 	#define TOKEN(name, string) name,
 	enum {
-	    TOKEN_LIST(TOKEN),	
+	    TOKEN_LIST(TOKEN)
 	    NUM_TOKENS
-	}
+	};
 	#undef TOKEN
 
 	static int getTokenIndex(std::string);
 
     private:
-	static const char* const token_names[NUM_TOKENS];
+	static std::string token_names[NUM_TOKENS];
 	
-}
-
-
-class Token{
-    
-    public:
-
-        // void setTokenName(std::string name){this->token_name_ = name;}
-        /* std::string getTokenType(){return this->token_type;} */
-        /* int getTokenValue(){return this->token_value;} */
-        /* std::string getTokenValueStr(){return this->token_value_str;} */
-
-	Token(int, std::string);
-	
-
-    private:
-        int value;
-	std::string type;
-	
-
 };
 
 
+class Token {
+    
+    public:
+	Token(int, std::string);
+	int getValue();
+	std::string getType();
+	
+    private:
+        int value;
+	std::string type;
+};
 
 #endif // TOKEN_H
 

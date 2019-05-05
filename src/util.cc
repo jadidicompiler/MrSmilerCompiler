@@ -42,4 +42,18 @@ bool isNumber(char ch){
     return (ch > 47 && ch < 58)? true: false;
 }
 
+
+// convert a string to integer
+int convertToNumber(std::string num){
+    int n = 0;
+
+    for(int i = 0; i < num.size(); i++){
+	// since number zero is in 48 place of ascii table
+	n = n * 10 + (num[i] - 48); 
+    }
+
+    return n;
+}
+
+
 }

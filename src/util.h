@@ -23,5 +23,9 @@ bool isAlpha(char ch);
 bool isNumber(char ch);
 
 
+// convert a string to integer
+
+int convertToNumber(std::string num);
+
 }
 
