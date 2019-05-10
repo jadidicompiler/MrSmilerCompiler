@@ -34,7 +34,7 @@ CPPFLAGS += -isystem $(GTEST_DIR)/include
 
 # Flags passed to the C++ compiler.
 #CXXFLAGS += -g -Wall -Wextra -pthread -std=c++11
-CXXFLAGS += -g -Wall -Wextra -pthread 
+CXXFLAGS += -g -pthread 
 
 # Google Test libraries
 GTEST_LIBS = libgtest.a libgtest_main.a
@@ -53,6 +53,7 @@ GTEST_HEADERS = $(GTEST_DIR)/include/gtest/*.h \
 # House-keeping build targets.
 
 #all : $(GTEST_LIBS) $(TESTS)
+main: compiler.bin
 
 clean :
 	rm -f $(GTEST_LIBS) $(TESTS) *.o
@@ -92,9 +93,24 @@ util_unittest.o : $(TESTS_DIR)/util_unittest.cc \
                      $(SRC_DIR)/util.h $(GTEST_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(TESTS_DIR)/util_unittest.cc
 
-util_unittest: util.o util_unittest.o $(GTEST_LIBS)
+util_unittest : util.o util_unittest.o $(GTEST_LIBS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -L$(GTEST_LIB_DIR) -lgtest_main -lpthread $^ -o $@
 
-token.o: $(SRC_DIR)/token.cc
-	$(CXX) -c $(TESTS_DIR)/token.cc -o token.o
+token.o : $(SRC_DIR)/token.cc
+	$(CXX) -c $(SRC_DIR)/token.cc -o token.o
+
+lexiAnalyser.o : $(SRC_DIR)/lexiAnalyser.cc token.o util.o 
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(SRC_DIR)/lexiAnalyser.cc -o $@
+
+parser.o : $(SRC_DIR)/parser.cc $(SRC_DIR)/token.o
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(SRC_DIR)/parser.cc -o $@
+
+main.o: $(SRC_DIR)/main.cc lexiAnalyser.o 
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(SRC_DIR)/main.cc -o $@
+
+#compiler.bin : parser.o main.o token.o lexiAnalyser.o util.o
+compiler.bin : main.o token.o lexiAnalyser.o util.o
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $^ -o $@
+
+
 

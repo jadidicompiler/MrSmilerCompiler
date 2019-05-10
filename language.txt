@@ -1,0 +1,14 @@
+
+function sum(a){
+    return a + 1000;
+}
+
+let myVar = (98 + 46) + sum(2);
+
+const doSomething = function(){
+
+    return 0;
+}
+
+
+

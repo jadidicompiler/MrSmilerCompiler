@@ -104,6 +104,7 @@
     TOKEN(YIELD, "yield")                       \
      
 
+// a class for interacting with tokens list
 class TokenList {
     public:
 	std::string getString();	
@@ -116,6 +117,7 @@ class TokenList {
 	#undef TOKEN
 
 	static int getTokenIndex(std::string);
+	static std::string getTokenString(int);
 
     private:
 	static std::string token_names[NUM_TOKENS];
@@ -123,16 +125,23 @@ class TokenList {
 };
 
 
+// holding a token type and value <type, value>
 class Token {
     
     public:
 	Token(int, std::string);
 	int getValue();
 	std::string getType();
+
+	// check if token value is equal to str
+	bool valueIs(int value);
+
+	// check if token type is equal to str
+	bool typeIs(char* str); 
 	
     private:
-        int value;
 	std::string type;
+        int value;
 };
 
 #endif // TOKEN_H

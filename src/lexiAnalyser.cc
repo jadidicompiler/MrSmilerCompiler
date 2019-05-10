@@ -8,23 +8,25 @@ void LexicalAnalyser::printTokens(){
     for(int i = 0; i < this->tokens.size(); i++){
         std::string token_type = this->tokens[i]->getType();
         int token_value = this->tokens[i]->getValue();
-        /* std::string value; */
-        /* if (token_type == "id"){ */
-        /*     value = this->symbol_table[token_value]; */ 
-        /* } */
-        /* else if( token_type == "num" || token_type == "kw" || token_type == "sep"){ */
-        /*     value = this->tokens[i]->getTokenValueStr(); */ 
-        /* } */
-        /* else if(token_type == "op"){ */
-        /*     value = "\'"+ this->tokens[i]->getTokenValueStr() + "\'"; */ 
-        /* } */
-        /* else { */
-        /*     value = token_value; */ 
-        /* } */
-        std::cout << "<"<< token_type <<", "<< value << ">" << " "; 
+	
+	if(token_type == "id"){
+	    std::cout << "<"<< token_type <<", "<< this->symbol_table[token_value ]<< ">" << " "; 
+	}
+	else if(token_type == "num"){
+	    std::cout << "<"<< token_type <<", "<< token_value << ">" << " "; 
+	}
+	else {
+	    std::cout << "<"<< token_type <<", '"<< TokenList::getTokenString(token_value)<< "'>" << " "; 
+	}
         std::cout << std::endl;
     }
 
+}
+
+LexicalAnalyser::~LexicalAnalyser(){
+    for(int i = 0; i < this->tokens.size(); i++){
+	delete this->tokens[i]; 
+    }
 }
 
 
@@ -267,13 +269,16 @@ void LexicalAnalyser::scan(){
 		    // if it was not there then put the token
 		    // in the symbol table
 		    value = TokenList::getTokenIndex(str);
-		    if(value != -1){
+		    if(value == -1){
 			this->symbol_table.push_back(str);	 
 			value = ++this->st_index;
 		    }
+		    else if(this->token_type == "id"){
+			this->token_type = "kw";
+		    }
 		}
 
-		token = new Token(value, this->token_type)
+		token = new Token(value, this->token_type);
 
                 this->tokens.push_back(token);
                 this->word_begin = this->forward + 1;
@@ -296,3 +301,10 @@ void LexicalAnalyser::scan(){
         }
     } 
 }
+
+std::vector<Token*> LexicalAnalyser::getTokens(){
+    return this->tokens; 
+}
+
+
+

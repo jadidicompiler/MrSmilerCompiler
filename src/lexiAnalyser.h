@@ -83,7 +83,7 @@ class LexicalAnalyser {
             this->state = state;
             this->token_type = str;
         }
-
+	
 
     public:
 
@@ -93,14 +93,15 @@ class LexicalAnalyser {
             this->forward = -1;
         }
 
+	~LexicalAnalyser();
+
         // scan the file
         void scan();
-
 
 	// print tokens on the console
         void printTokens();
 
-
+	std::vector<Token*> getTokens();
 };
 
 
