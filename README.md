@@ -7,6 +7,6 @@ cd make
 make compiler.bin
 ./compiler.bin ../language.txt
 ```
-![programming language picture](://github.com/jadidicompiler/MrSmilerCompiler/blob/master/pLanguage.png)
+![programming language picture](https://github.com/jadidicompiler/MrSmilerCompiler/blob/master/pLanguage.png)
 <br>
-![first phase result picture](pLanguag://github.com/jadidicompiler/MrSmilerCompiler/blob/master/phase1.png)
+![first phase result picture](https://github.com/jadidicompiler/MrSmilerCompiler/blob/master/phase1.png)
